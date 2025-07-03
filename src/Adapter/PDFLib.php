@@ -1188,7 +1188,11 @@ class PDFLib extends \OPSPDFLib implements Canvas
         $img = $this->_imgs[$img];
 
         $y = $this->y($y) - $h;
-        $this->_pdf->fit_image($img, $x, $y, 'boxsize={' . "$w $h" . '} fitmethod=entire');
+        if (strtolower($img_type) === "svg") {
+            $this->_pdf->fit_graphics($img, $x, $y, 'boxsize={' . "$w $h" . '} fitmethod=entire');
+        } else {
+            $this->_pdf->fit_image($img, $x, $y, 'boxsize={' . "$w $h" . '} fitmethod=entire');
+        }
     }
 
     public function text($x, $y, $text, $font, $size, $color = [0, 0, 0], $word_spacing = 0, $char_spacing = 0, $angle = 0)
