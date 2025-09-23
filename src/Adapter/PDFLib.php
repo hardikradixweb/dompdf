@@ -1143,7 +1143,7 @@ class PDFLib extends \OPSPDFLib implements Canvas
         if (substr($img, 0, 7) === "file://") {
             $img = substr($img, 7);
         }
-
+        $honorICCProfile = $this->_dompdf->getOptions()->get('honorICCProfile') ? 'true' : 'false';
         if (!isset($this->_imgs[$img])) {
             switch (strtolower($img_type)) {
                 case "webp":
@@ -1167,10 +1167,10 @@ class PDFLib extends \OPSPDFLib implements Canvas
                 case "jpeg":
                 /** @noinspection PhpMissingBreakStatementInspection */
                 case "png":
-                    $image_load_response = $this->_pdf->load_image($img_type, $img, "");
+                    $image_load_response = $this->_pdf->load_image($img_type, $img, "honoriccprofile=$honorICCProfile");
                     break;
                 case "svg":
-                    $image_load_response = $this->_pdf->load_graphics($img_type, $img, "");
+                    $image_load_response = $this->_pdf->load_graphics($img_type, $img, "honoriccprofile=$honorICCProfile");
                     break;
                 default:
                     // not handled

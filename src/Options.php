@@ -343,6 +343,11 @@ class Options
     private $httpContext;
 
     /**
+     * @var bool
+    */
+    private $honorICCProfile = false;
+
+    /**
      * @param array $attributes
      */
     public function __construct(?array $attributes = null)
@@ -451,6 +456,8 @@ class Options
                 $this->setPdflibLicense($value);
             } elseif ($key === 'httpContext' || $key === 'http_context') {
                 $this->setHttpContext($value);
+            } elseif ($key === 'honorICCProfile') {
+                $this->setHonorICCProfile($value);
             }
         }
         return $this;
@@ -524,6 +531,8 @@ class Options
             return $this->getPdflibLicense();
         } elseif ($key === 'httpContext' || $key === 'http_context') {
             return $this->getHttpContext();
+        } elseif ($key === 'honorICCProfile') {
+            return $this->getHonorICCProfile();
         }
         return null;
     }
@@ -1310,5 +1319,23 @@ class Options
         }
 
         return [true, null];
+    }
+
+    /**
+     * @param boolean $honorICCProfile
+     * @return $this
+    */
+    public function setHonorICCProfile($honorICCProfile)
+    {
+        $this->honorICCProfile = $honorICCProfile;
+        return $this;
+    }
+
+    /**
+     * @return boolean
+    */
+    public function getHonorICCProfile()
+    {
+        return $this->honorICCProfile;
     }
 }
