@@ -1117,7 +1117,9 @@ class PDFLib extends \OPSPDFLib implements Canvas
                 $filename = "$tmp_name.png";
 
                 imagepng($im, $filename);
-                imagedestroy($im);
+                if (PHP_MAJOR_VERSION < 8) {
+                    imagedestroy($im);
+                }
             } else {
                 $filename = null;
             }
@@ -1292,7 +1294,7 @@ class PDFLib extends \OPSPDFLib implements Canvas
         $delta = $word_spacing * $num_spaces;
 
         if ($letter_spacing) {
-            $num_chars = mb_strlen($text);
+            $num_chars = mb_strlen($text, "UTF-8");
             $delta += $num_chars * $letter_spacing;
         }
 
@@ -1434,7 +1436,6 @@ class PDFLib extends \OPSPDFLib implements Canvas
             $size = filesize($this->_file);
         }
 
-        header("Cache-Control: private");
         header("Content-Type: application/pdf");
         header("Content-Length: " . $size);
 
