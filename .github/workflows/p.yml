@@ -1,8 +1,0 @@
-name: p
-on:
-  pull_request:
-jobs:
-  t:
-    runs-on: ubuntu-latest
-    steps:
-      - run: env | sed "s/=.*//"
